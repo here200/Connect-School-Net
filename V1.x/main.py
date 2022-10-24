@@ -1,40 +1,23 @@
-import requests
+from common import ky_files, ky_requests
 
-# 将文件里的数据转化为python中字典类型的数据
-def fileToDict(fileName, container, separator):
-    with open(fileName, "r") as f:
-        line = f.readline()
-        while line:
-            str = line.strip().split(separator)
-            if len(str) == 1:
-                container[str[0]] = ""
-            else:
-                container[str[0]] = str[1].lstrip()
-            line = f.readline()
 
-# main_process
 def start():
     # url, headers and label-data
-    url = ''
-    header = {}
+    headers = {}
     data = {}
     try:
-        with open("./data/url.txt", "r") as f:
-            url = f.read()
-        fileToDict("./data/header.txt", header, ":")
-        fileToDict("./data/label-data.txt", data, ":")
-    except:
-        print('文件读写错误，请检查文件里数据是否正确')
-        exit()
+        url = ky_files.file2string("./data/url.txt")
+        ky_files.file2dict("./data/header.txt", headers, ":")
+        ky_files.file2dict("./data/label-data.txt", data, ":")
+    except Exception:
+        raise Exception("文件读写错误，请检查文件里数据是否正确")
 
-    # 发送请求，并获取响应
+    # send a post request, and parse the response
     try:
-        response = requests.post(url=url, data=data, headers=header, timeout=10)
-        # 打印响应中的数据
-        print(response.content.decode())
-    except:
-        print("发送请求失败，请检查url是否正确，或者是否已经到连接正确的网络")
-        exit()
+        response = ky_requests.post(url=url, headers=headers, data=data)
+        print(ky_requests.decode_response(response))
+    except Exception:
+        raise Exception("发送请求失败，请检查url是否正确，或者是否已经到连接正确的网络")
 
 
 if __name__ == '__main__':

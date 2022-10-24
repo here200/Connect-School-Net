@@ -1,3 +1,5 @@
-/Project/*
+# pycharm
+/**/.idea/*
 
-.gitignore
+# python_temp_files
+/**/__pycache__/*

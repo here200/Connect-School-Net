@@ -1,0 +1,8 @@
+userId: 
+password: 
+service: 
+queryString: 
+operatorPwd: 
+operatorUserId: 
+validcode: 
+passwordEncrypt: false
