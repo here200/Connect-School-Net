@@ -3,7 +3,7 @@ from common import ky_files, ky_requests, ky_res
 
 def get_query_string(url, data):
     ky_res.cache = ky_requests.decode_response(ky_requests.get(url=url))
-    data["queryString"] = ky_res.get_data("<script>top.self.location.href.*[?](.*)'</script>")
+    data["queryString"] = ky_res.get_one_data("<script>top.self.location.href.*[?](.*)'</script>")
 
 
 def start():
